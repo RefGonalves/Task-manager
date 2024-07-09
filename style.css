@@ -10,6 +10,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-size: 12px;
 }
 
 body {
@@ -21,28 +22,46 @@ body {
 }
 
 header {
+    position: fixed;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-self: center;
+    justify-content: flex-start;
     width: 100%;
-    height: 8rem;
+    height: fit-content;
+    background-color: var(--primary-color);
     border-bottom: 2px solid var(--secondary-color);
     padding: 1rem;
+    gap: 1rem;
 }
 
-summary {
+
+
+header summary {
     color: var(--secondary-color);
     font-size: 2rem;
     display: flex;
-    width: 100%;
     align-items: center;
     justify-content: center;
     list-style-type: none;
     padding: 1rem;
+    cursor: pointer;
+    border: 2px solid var(--secondary-color);
+    border-radius: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    transition: all .1s ease-in-out;
 }
 
-details[open] summary {
-    color: var(--tertiary-color);
+header summary:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+header details[open] summary {
+    color: var(--primary-color);
+    font-weight: bold;
+    background-color: var(--secondary-color);
 }
 
 .filters {
@@ -54,6 +73,17 @@ details[open] summary {
     justify-content: center;
 }
 
+header button {
+    background-color: var(--primary-color);
+    border: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+header button:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
 /* TASK LISTS */
 
 main {
@@ -63,6 +93,7 @@ main {
     justify-content: center;
     align-items: center;
     padding: 1.5rem;
+    padding-top: 7rem;
     gap: 1.5rem;
 }
 
@@ -74,20 +105,40 @@ main {
     border-radius: 1rem;
     padding: 1.5rem;
     height: 40rem;
+    gap: 1rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);;
+}
+
+#ongoingTaskContainer {
+    width: 70%;
+}
+
+#completedTaskContainer {
+    width: 30%;
 }
 
 .task-list {
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-y: scroll;
     gap: 1rem;
+    padding: 1.5rem;
+    box-shadow: inset 0 0 1rem rgba(0, 0, 0, 0.3);
+    border-radius: 1rem;
 }
 
 ::-webkit-scrollbar {
     width: 1rem;
-    background-color: var(--primary-color);
+    background-color: transparent;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+::-webkit-scrollbar-track {
+    margin: 1rem;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -105,12 +156,14 @@ main {
     border-left: 10px solid var(--secondary-color);
     border-radius: 1rem;
     padding: 1.5rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
 }
 
 /* INSIDE DA TASK */
 
 .task-disciplina {
     width: fit-content;
+    height: fit-content;
     padding: .3rem 1rem;
     border-radius: 1rem;
     color: var(--primary-color);
@@ -121,84 +174,263 @@ main {
     font-size: 1.5rem;
 }
 
+.task-status {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.task-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 2.5rem;
+}
+
+.task-buttons input[type="checkbox"],
+header input[type="checkbox"] {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* MODAL DE TASK */
+
+.modal {
+    display: none;
+    position: fixed;
+    right: 20%;
+    left: 20%;
+    top: 20%;
+    bottom: 20%;
+    background-color: var(--primary-color);
+    border-radius: 1rem;
+    border: 2px solid;
+    z-index: 1000;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 3rem rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#modalInfo {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+#taskDetails {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    height: 100% !important;
+}
+
+#taskDetails .task-description {
+    height: 100%;
+}
+
+/* CHECKBOXES */
+input[type="checkbox"] {
+    appearance: none;
+    width: 2.5rem;
+    max-width: 100%;
+    height: 2.5rem;
+    max-height: 100%;
+    border: 2px solid var(--secondary-color);
+    border-radius: 1rem;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none; /* Remove a borda ao focar */
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--secondary-color); /* Cor de fundo quando estiver selecionado */
+}
+
+header label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 9rem;
+    text-align: center;
+}
+
 /* DISCIPLINAS */
 
-.task-sociologia {
+.task-sociologia,
+.task-sociologia input[type="checkbox"] {
     border-color: #ffe282;
 }
 
-.task-sociologia .task-disciplina {
+.task-sociologia .task-disciplina,
+.task-sociologia button {
     background-color: #ffe282;
 }
 
-.task-educacao-fisica {
+.task-educacao-fisica,
+.task-educacao-fisica input[type="checkbox"] {
     border-color: #82aeff;
 }
 
-.task-educacao-fisica .task-disciplina {
+.task-educacao-fisica .task-disciplina,
+.task-educacao-fisica button {
     background-color: #82aeff;
 }
 
-.task-projeto-digital {
+.task-projeto-digital,
+.task-projeto-digital input[type="checkbox"] {
     border-color: #d782ff;
 }
 
-.task-projeto-digital .task-disciplina {
+.task-projeto-digital .task-disciplina,
+.task-projeto-digital button {
     background-color: #d782ff;
 }
 
-.task-gestao-emp {
+.task-gestao,
+.task-gestao input[type="checkbox"] {
     border-color: #ffbe82;
 }
 
-.task-gestao-emp .task-disciplina {
+.task-gestao .task-disciplina,
+.task-gestao button {
     background-color: #ffbe82;
 }
 
-.task-portugues {
+.task-portugues,
+.task-portugues input[type="checkbox"] {
     border-color: #ff8282;
 }
 
-.task-portugues .task-disciplina {
+.task-portugues .task-disciplina,
+.task-portugues button {
     background-color: #ff8282;
 }
 
-.task-ilustracao {
+.task-ilustracao,
+.task-ilustracao input[type="checkbox"] {
     border-color: #9d82ff;
 }
 
-.task-ilustracao .task-disciplina {
+.task-ilustracao .task-disciplina,
+.task-ilustracao button {
     background-color: #9d82ff;
 }
 
-.task-informatica {
+.task-informatica,
+.task-informatica input[type="checkbox"] {
     border-color: #82f0ff;
 }
 
-.task-informatica .task-disciplina {
+.task-informatica .task-disciplina,
+.task-informatica button {
     background-color: #82f0ff;
 }
 
-.task-projeto-visual {
+.task-projeto-visual,
+.task-projeto-visual input[type="checkbox"] {
     border-color: #cfff82;
 }
 
-.task-projeto-visual .task-disciplina {
+.task-projeto-visual .task-disciplina,
+.task-projeto-visual button {
     background-color: #cfff82;
 }
 
-.task-projeto-editorial {
+.task-projeto-editorial,
+.task-projeto-editorial input[type="checkbox"] {
     border-color: #82ff8c;
 }
 
-.task-projeto-editorial .task-disciplina {
+.task-projeto-editorial .task-disciplina,
+.task-projeto-editorial button {
     background-color: #82ff8c;
 }
 
-.task-relacoes-humanas {
+.task-relacoes-humanas,
+.task-relacoes-humanas input[type="checkbox"] {
     border-color: #96c4cf;
 }
 
-.task-relacoes-humanas .task-disciplina {
+.task-relacoes-humanas .task-disciplina,
+.task-relacoes-humanas button {
     background-color: #96c4cf;
+}
+
+/* TASK COMPLETAS */
+
+#completed-task-list .task-item,
+#completed-task-list input[type="checkbox"] {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+#completed-task-list .task-disciplina,
+#completed-task-list button,
+#completed-task-list input[type="checkbox"]:checked {
+    background-color: var(--secondary-color);
+}
+
+#completed-task-list .task-name,
+#completed-task-list .task-description {
+    text-decoration: line-through;
+}
+
+#taskModal input[type="checkbox"]:checked {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* BOTÕES */
+
+button {
+    width: 2.5rem;
+    height: 2.5rem;
+    min-height: 2.5rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    outline: none;
+    border: none;
+    transition: all .2s ease-in-out;
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 906px) {
+    main {
+        flex-wrap: wrap; /* Quebra de linha quando a tela for pequena */
+    }
+
+    #ongoingTaskContainer,
+    #completedTaskContainer {
+        width: 100%; /* Ocupa 100% da largura da tela */
+    }
+    .filters {
+        gap: .5rem;
+    }
 }
