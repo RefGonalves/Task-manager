@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    const disciplines = ['Sociologia', 'Educação Física', 'Projeto Digital', 'Gestão', 'Química', 'Biologia', 'Filosofia']; // Lista de disciplinas
+
     // Array de tarefas iniciais
     const tasks = [
         {
@@ -238,6 +241,49 @@ document.addEventListener('DOMContentLoaded', () => {
     // Adiciona event listener para o botão de limpar filtros
     const clearFiltersButton = document.getElementById('clearFiltersButton');
     clearFiltersButton.addEventListener('click', clearFilters);
+    const openCreateTaskModalButton = document.getElementById('openCreateTaskModal');
+    openCreateTaskModalButton.addEventListener('click', () => {
+        const createTaskModal = document.getElementById('createTaskModal');
+        createTaskModal.style.display = 'block';
+
+        // Preencher o dropdown de disciplinas
+        const taskDisciplineDropdown = document.getElementById('taskDiscipline');
+        taskDisciplineDropdown.innerHTML = disciplines.map(discipline => 
+            `<option value="${discipline}">${discipline}</option>`).join('');
+    });
+
+    const closeCreateTaskButton = document.querySelector('.close-create-task');
+    closeCreateTaskButton.addEventListener('click', () => {
+        const createTaskModal = document.getElementById('createTaskModal');
+        createTaskModal.style.display = 'none';
+    });
+
+    const createTaskForm = document.getElementById('createTaskForm');
+    createTaskForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const taskName = document.getElementById('taskName').value;
+        const taskDiscipline = document.getElementById('taskDiscipline').value;
+        const taskDescription = document.getElementById('taskDescription').value;
+        const taskDate = document.getElementById('taskDate').value;
+
+        const newTask = {
+            id: tasks.length + 1,
+            name: taskName,
+            discipline: taskDiscipline,
+            description: taskDescription,
+            date: taskDate,
+            completed: false
+        };
+
+        tasks.push(newTask);
+        renderTasks();
+
+        const createTaskModal = document.getElementById('createTaskModal');
+        createTaskModal.style.display = 'none';
+        createTaskForm.reset();
+    });
+
 
     // Renderiza as tarefas ao carregar a página
     renderTasks();

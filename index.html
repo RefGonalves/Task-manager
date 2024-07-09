@@ -9,6 +9,9 @@
 </head>
 <body>
     <header>
+        <button id="openCreateTaskModal" title="Criar uma nova tarefa">
+            <i class="nf nf-fa-plus"></i>
+        </button>
         <button id="clearFiltersButton" title="Remover todos os filtros">
             <i class="nf nf-md-filter_off"></i>
         </button>
@@ -68,23 +71,56 @@
 
     <!-- Modal para detalhes da tarefa -->
     <div id="taskModal" class="modal">
-    <div class="modal-content">
-        <div id="modalInfo">
-            <div class="task-disciplina" id="taskDisciplinaId">
-                a
+        <div class="modal-content">
+            <div id="modalInfo" class="modal-header">
+                <div class="task-disciplina" id="taskDisciplinaId">
+                    a
+                </div>
+                <button class="close-task">
+                    <i class="nf nf-fa-close"></i>
+                </button>
             </div>
-            <button class="close-task">
-                <i class="nf nf-fa-close"></i>
-            </button>
-        </div>
-        <div id="taskDetails">
-            <!-- Conteúdo dos detalhes da tarefa será carregado aqui -->
+            <div id="taskDetails" class="task-details">
+                <!-- Conteúdo dos detalhes da tarefa será carregado aqui -->
 
+            </div>
         </div>
     </div>
+
+    <!-- Modal para a criação da tarefa -->
+    <div id="createTaskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Criar Nova Tarefa</h2>
+                <span class="close-create-task">&times;</span>
+            </div>
+            <form id="createTaskForm" class="task-details">
+                <label for="taskName">
+                    Nome da Tarefa:
+                    <input type="text" id="taskName" name="taskName" required>
+                </label>
+    
+                <label for="taskDiscipline">
+                    <select id="taskDiscipline" name="taskDiscipline" required>
+                        <!-- As opções serão preenchidas dinamicamente pelo JavaScript -->
+                    </select>
+                </label>
+    
+                <label for="taskDescription">
+                    Descrição:
+                    <textarea id="taskDescription" name="taskDescription" required></textarea>
+                </label>
+    
+                <label for="taskDate">
+                    Data (DD/MM/YYYY):
+                    <input type="date" id="taskDate" name="taskDate" required>
+                </label>
+    
+                <button type="submit">Adicionar Tarefa</button>
+            </form>
+        </div>
     </div>
-
-
+    
 
     <script src="script.js"></script>
 </body>

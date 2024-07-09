@@ -104,7 +104,7 @@ main {
     border: 2px solid var(--secondary-color);
     border-radius: 1rem;
     padding: 1.5rem;
-    height: 40rem;
+    height: 75vh;
     gap: 1rem;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);;
 }
