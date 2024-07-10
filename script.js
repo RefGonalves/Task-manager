@@ -2,6 +2,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const disciplines = ['Sociologia', 'Educação Física', 'Projeto Digital', 'Gestão', 'Português', 'Ilustração', 'Informática', 'Projeto Visual', 'Projeto Editorial', 'Relações Humanas']; // Lista de disciplinas
 
+    // Função para exportar tarefas
+    function exportTasks() {
+        const tasksJSON = JSON.stringify(tasks, null, 2);
+        const blob = new Blob([tasksJSON], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'tasks.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    // Função para importar tarefas
+    function importTasks(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const importedTasks = JSON.parse(e.target.result);
+                importedTasks.forEach(importedTask => {
+                    const existingTaskIndex = tasks.findIndex(task => task.id === importedTask.id);
+                    
+                    if (existingTaskIndex !== -1) {
+                        // Verifica se o estado da tarefa mudou
+                        if (tasks[existingTaskIndex].completed !== importedTask.completed) {
+                            tasks[existingTaskIndex] = importedTask; // Atualiza a tarefa com o novo estado
+                        }
+                    } else {
+                        tasks.push(importedTask); // Adiciona a nova tarefa
+                    }
+                });
+                saveTasks(tasks);
+                renderTasks();
+            };
+            reader.readAsText(file);
+        }
+    }
+
+    // Event listener para o botão de exportar
+    const exportTasksButton = document.getElementById('exportTasksButton');
+    exportTasksButton.addEventListener('click', exportTasks);
+
+    // Event listener para o botão de importação (simula o clique no input file)
+    const importTasksButton = document.getElementById('importTasksButton');
+    importTasksButton.addEventListener('click', () => {
+        document.getElementById('importTasksInput').click();
+    });
+
+    // Event listener para o input file de importação
+    const importTasksInput = document.getElementById('importTasksInput');
+    importTasksInput.addEventListener('change', importTasks);
+
+
     // Função para carregar as tarefas do localStorage
     function loadTasks() {
         const tasksJSON = localStorage.getItem('tasks');

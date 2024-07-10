@@ -26,7 +26,7 @@ header {
     display: flex;
     flex-direction: row;
     align-self: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     width: 100%;
     height: fit-content;
     background-color: var(--primary-color);
@@ -83,6 +83,31 @@ header button {
 header button:hover {
     background-color: var(--secondary-color);
     color: var(--primary-color);
+}
+
+/* SESSÕES DE BOTÕES */
+
+.task-header-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: flex-start !important;
+}
+
+.file-header-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.file-header-buttons .icon-file {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    color: var(--secondary-color);
+    font-size: 2rem;
 }
 
 /* TASK LISTS */
@@ -519,7 +544,7 @@ button:hover {
 }
 
 /* MEDIA QUERIES */
-@media (max-width: 906px) {
+@media (max-width: 972px) {
     main {
         flex-wrap: wrap; /* Quebra de linha quando a tela for pequena */
     }

@@ -9,50 +9,61 @@
 </head>
 <body>
     <header>
-        <button id="openCreateTaskModal" title="Criar uma nova tarefa">
-            <i class="nf nf-fa-plus"></i>
-        </button>
-        <button id="clearFiltersButton" title="Remover todos os filtros">
-            <i class="nf nf-md-filter_off"></i>
-        </button>
-        <details>
-            <summary title="Filtros">
-                <i class="nf nf-md-filter"></i>
-            </summary>
-            <div class="filters">
-                <label class="filter-item sociologia">
-                    <input type="checkbox" id="sociologia"> Sociologia
-                </label>
-                <label class="filter-item educacao-fisica">
-                    <input type="checkbox" id="educacao-fisica"> Educação Física
-                </label>
-                <label class="filter-item projeto-digital">
-                    <input type="checkbox" id="projeto-digital"> Projeto Digital
-                </label>
-                <label class="filter-item gestao-emp">
-                    <input type="checkbox" id="gestao"> Gestão 
-                </label>
-                <label class="filter-item portugues">
-                    <input type="checkbox" id="portugues"> Português
-                </label>
-                <label class="filter-item ilustracao">
-                    <input type="checkbox" id="ilustracao"> Ilustração
-                </label>
-                <label class="filter-item informatica">
-                    <input type="checkbox" id="informatica"> Informática
-                </label>
-                <label class="filter-item projeto-visual">
-                    <input type="checkbox" id="projeto-visual"> Projeto Visual
-                </label>
-                <label class="filter-item projeto-editorial">
-                    <input class="checkin" type="checkbox" id="projeto-editorial"> Projeto Editorial
-                </label>
-                <label class="filter-item relacoes-humanas">
-                    <input type="checkbox" id="relacoes-humanas"> Relações Humanas
-                </label>
-            </div>
-        </details>
-
+        <div class="task-header-buttons">
+            <button id="openCreateTaskModal" title="Criar uma nova tarefa">
+                <i class="nf nf-fa-plus"></i>
+            </button>
+            <button id="clearFiltersButton" title="Remover todos os filtros">
+                <i class="nf nf-md-filter_off"></i>
+            </button>
+            <details>
+                <summary title="Filtros">
+                    <i class="nf nf-md-filter"></i>
+                </summary>
+                <div class="filters">
+                    <label class="filter-item sociologia">
+                        <input type="checkbox" id="sociologia"> Sociologia
+                    </label>
+                    <label class="filter-item educacao-fisica">
+                        <input type="checkbox" id="educacao-fisica"> Educação Física
+                    </label>
+                    <label class="filter-item projeto-digital">
+                        <input type="checkbox" id="projeto-digital"> Projeto Digital
+                    </label>
+                    <label class="filter-item gestao-emp">
+                        <input type="checkbox" id="gestao"> Gestão 
+                    </label>
+                    <label class="filter-item portugues">
+                        <input type="checkbox" id="portugues"> Português
+                    </label>
+                    <label class="filter-item ilustracao">
+                        <input type="checkbox" id="ilustracao"> Ilustração
+                    </label>
+                    <label class="filter-item informatica">
+                        <input type="checkbox" id="informatica"> Informática
+                    </label>
+                    <label class="filter-item projeto-visual">
+                        <input type="checkbox" id="projeto-visual"> Projeto Visual
+                    </label>
+                    <label class="filter-item projeto-editorial">
+                        <input class="checkin" type="checkbox" id="projeto-editorial"> Projeto Editorial
+                    </label>
+                    <label class="filter-item relacoes-humanas">
+                        <input type="checkbox" id="relacoes-humanas"> Relações Humanas
+                    </label>
+                </div>
+            </details>
+        </div>
+        <div class="file-header-buttons">
+            <i class="nf nf-fa-file icon-file"></i>
+            <button id="exportTasksButton" title="Exportar lista de tasks">
+                <i class="nf nf-fa-arrow_up" ></i>
+            </button>
+            <input type="file" id="importTasksInput" style="display: none;">
+            <button id="importTasksButton" title="Importar lista de tasks">
+                <i class="nf nf-fa-arrow_down"></i>
+            </button>
+        </div>
     </header>
     <main>
         <div class="task-container" id="ongoingTaskContainer">
