@@ -87,20 +87,21 @@ header button:hover {
 
 /* SESSÕES DE BOTÕES */
 
-.task-header-buttons {
+#taskHeaderButtons {
     display: flex;
     flex-direction: row;
     gap: 1rem;
     justify-content: flex-start !important;
 }
 
-.file-header-buttons {
+/* */
+#fileHeaderButtons {
     display: flex;
     flex-direction: row;
     gap: 1rem;
 }
 
-.file-header-buttons .icon-file {
+#fileHeaderButtons .icon-file {
     width: 2.5rem;
     height: 2.5rem;
     display: flex;
