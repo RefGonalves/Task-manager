@@ -1,58 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const disciplines = ['Sociologia', 'Educação Física', 'Projeto Digital', 'Gestão', 'Química', 'Biologia', 'Filosofia']; // Lista de disciplinas
+    const disciplines = ['Sociologia', 'Educação Física', 'Projeto Digital', 'Gestão', 'Português', 'Ilustração', 'Informática', 'Projeto Visual', 'Projeto Editorial', 'Relações Humanas']; // Lista de disciplinas
 
-    // Array de tarefas iniciais
-    const tasks = [
-        {
-            id: 1,
-            name: 'Lorem ipsum',
-            discipline: 'Sociologia',
-            description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur magnam earum soluta aliquid aperiam obcaecati, sint hic dolores omnis sed!',
-            date: '01/01/2020', // Exemplo de data no formato DD/MM/YYYY
-            completed: false
-        },
-        {
-            id: 2,
-            name: 'Tarefa 2',
-            discipline: 'Educação Física',
-            description: 'Descrição da Tarefa 2',
-            date: '10/07/2024', // Exemplo de data no formato DD/MM/YYYY
-            completed: false
-        },
-        {
-            id: 3,
-            name: 'Tarefa 3',
-            discipline: 'Projeto Digital',
-            description: 'Descrição da Tarefa 3',
-            date: '11/07/2024', // Exemplo de data no formato DD/MM/YYYY
-            completed: false
-        },
-        {
-            id: 4,
-            name: 'Lorem ipsum',
-            discipline: 'Gestão',
-            description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur magnam earum soluta aliquid aperiam obcaecati, sint hic dolores omnis sed!',
-            date: '01/01/2020', // Exemplo de data no formato DD/MM/YYYY
-            completed: false
-        },
-        {
-            id: 5,
-            name: 'Lorem ipsum',
-            discipline: 'Projeto Visual',
-            description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur magnam earum soluta aliquid aperiam obcaecati, sint hic dolores omnis sed!',
-            date: '01/01/2020', // Exemplo de data no formato DD/MM/YYYY
-            completed: false
-        },
-        {
-            id: 6,
-            name: 'Lorem ipsum',
-            discipline: 'Projeto Editorial',
-            description: '            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias repellendus, unde necessitatibus expedita illum laudantium tempora, odio dicta aliquid placeat modi ipsam mollitia, quia tenetur possimus officia praesentium magni quod amet deserunt et. Molestiae autem harum recusandae nulla sit culpa sed, dicta quis possimus sequi commodi minima non inventore. Error.',
-            date: '01/01/2020', // Exemplo de data no formato DD/MM/YYYY
-            completed: false
-        },
-    ];
+    // Função para carregar as tarefas do localStorage
+    function loadTasks() {
+        const tasksJSON = localStorage.getItem('tasks');
+        return tasksJSON ? JSON.parse(tasksJSON) : [];
+    }
+
+    // Função para salvar as tarefas no localStorage
+    function saveTasks(tasks) {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+    // Carrega as tarefas do localStorage
+    const tasks = loadTasks();
 
     // Função para formatar o nome da disciplina em uma classe CSS válida
     function sanitizeClassName(className) {
@@ -68,6 +29,25 @@ document.addEventListener('DOMContentLoaded', () => {
             .toLowerCase()
             .replace(/\s+/g, '-')
             .replace(/[^a-z0-9-]/g, ''); // Remove caracteres não alfanuméricos além de hífens
+    }
+
+    // Função para deletar uma tarefa
+    function deleteTask(taskId) {
+        const taskIndex = tasks.findIndex(task => task.id === taskId);
+        if (taskIndex !== -1) {
+            tasks.splice(taskIndex, 1); // Remove a tarefa do array
+            saveTasks(tasks); // Salva as alterações no localStorage
+            renderTasks(); // Re-renderiza as listas de tarefas
+        }
+    }
+
+    // Função para converter data
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
     }
 
     // Função para renderizar as tarefas na lista de tarefas e na lista de tarefas concluídas
@@ -91,9 +71,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Cria os elementos das informações da tarefa
+            const taskHeader = document.createElement('div');
+            taskHeader.className = 'task-header';
             const taskDisciplina = document.createElement('div');
             taskDisciplina.className = 'task-disciplina';
             taskDisciplina.textContent = task.discipline;
+            taskHeader.appendChild(taskDisciplina);
+
+            // BOTÃO DE APAGAR TASK
+            const deleteButton = document.createElement('button'); // Cria o botão de apagar
+            const deleteIcon = document.createElement('i');
+            deleteIcon.className = 'nf nf-fa-trash';
+            deleteButton.appendChild(deleteIcon);
+            deleteButton.className = 'delete-task';
+            deleteButton.addEventListener('click', function () {
+                if (confirm('Tem certeza de que deseja apagar esta tarefa?')) {
+                    deleteTask(task.id);
+                }
+            });
+            taskHeader.appendChild(deleteButton); // Adiciona o botão de apagar aos botões da tarefa
 
             const taskName = document.createElement('div');
             taskName.className = 'task-name';
@@ -107,31 +103,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const taskDate = document.createElement('div');
             taskDate.className = 'task-date';
-            taskDate.textContent = task.date;
+            taskDate.textContent = formatDate(task.date);
 
             const taskStatus = document.createElement('div');
             taskStatus.className = 'task-status';
 
-            const checkbox = document.createElement('input'); // Cria um elemento <input> do tipo checkbox
-            checkbox.type = 'checkbox'; // Define o tipo do input como checkbox
-            checkbox.className = 'task-checkbox'; // Adiciona a classe 'task-checkbox' ao checkbox
-            checkbox.checked = task.completed; // Define o estado checked do checkbox com base no status da tarefa
-            checkbox.addEventListener('change', function () { // Adiciona um evento de mudança ao checkbox
-                task.completed = this.checked; // Atualiza o status de conclusão da tarefa
-                renderTasks(); // Re-renderiza as listas de tarefas
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'task-checkbox';
+            checkbox.checked = task.completed;
+            checkbox.addEventListener('change', function () {
+                task.completed = this.checked;
+                saveTasks(tasks);
+                renderTasks();
             });
 
-            // Adiciona o checkbox ao div de status
             taskStatus.appendChild(checkbox);
 
-            // Cria uma caixa para os botões
             const taskButtons = document.createElement('div');
             taskButtons.className = 'task-buttons';
             taskButtons.appendChild(taskStatus);
             taskButtons.appendChild(expandButton);
 
-            // Adiciona os elementos criados ao item de tarefa
-            taskItem.appendChild(taskDisciplina);
+            taskItem.appendChild(taskHeader);
             taskItem.appendChild(taskName);
             taskItem.appendChild(taskDate);
             taskItem.appendChild(taskButtons);
@@ -139,11 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Verifica se a disciplina da tarefa está nos filtros ativos
             const taskDisciplineClass = sanitizeClassName(task.discipline);
             if (activeFilters.length === 0 || activeFilters.includes(taskDisciplineClass)) {
-                // Adiciona o item de tarefa à lista apropriada com base no status de conclusão
                 if (task.completed) {
-                    completedTaskList.appendChild(taskItem); // Adiciona à lista de tarefas concluídas
+                    completedTaskList.appendChild(taskItem);
                 } else {
-                    ongoingTaskList.appendChild(taskItem); // Adiciona à lista de tarefas em andamento
+                    ongoingTaskList.appendChild(taskItem);
                 }
             }
         });
@@ -160,9 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('taskModal');
         modal.className = 'modal task-' + sanitizeClassName(task.discipline);
         const taskDetails = document.getElementById('taskDetails');
+        const taskFooter = document.getElementById('taskFooter');
 
         // Limpa o conteúdo do modal
         taskDetails.innerHTML = '';
+        taskFooter.innerHTML = '';
         taskDetails.className = 'task-' + sanitizeClassName(task.discipline);
 
         // Cria elementos para os detalhes da tarefa
@@ -174,6 +169,22 @@ document.addEventListener('DOMContentLoaded', () => {
         modalInfo.className = 'task-' + sanitizeClassName(task.discipline);
         const taskDiscipline = document.getElementById('taskDisciplinaId');
         taskDiscipline.textContent = task.discipline;
+        // BOTÃO DE APAGAR TASK
+        const deleteButton = document.createElement('button'); // Cria o botão de apagar
+        const deleteIcon = document.createElement('i');
+        deleteIcon.className = 'nf nf-fa-trash';
+        deleteButton.appendChild(deleteIcon);
+        deleteButton.className = 'delete-task';
+        deleteButton.addEventListener('click', function () {
+            if (confirm('Tem certeza de que deseja apagar esta tarefa?')) {
+                deleteTask(task.id);
+            }
+            closeModal();
+        });
+
+        const deleteButtonDiv = document.getElementById('taskDeleteButton');
+        deleteButtonDiv.innerHTML = '';
+        deleteButtonDiv.appendChild(deleteButton);
 
         const taskDescription = document.createElement('div');
         taskDescription.className = 'task-description';
@@ -181,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const taskDate = document.createElement('div');
         taskDate.className = 'task-date';
-        taskDate.textContent = task.date;
+        taskDate.textContent = formatDate(task.date);
 
         const taskStatus = document.createElement('div');
         taskStatus.className = 'task-status';
@@ -192,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         checkbox.checked = task.completed; // Define o estado checked do checkbox com base no status da tarefa
         checkbox.addEventListener('change', function () { // Adiciona um evento de mudança ao checkbox
             task.completed = this.checked; // Atualiza o status de conclusão da tarefa
+            saveTasks(tasks);
             renderTasks(); // Re-renderiza as listas de tarefas
         });
 
@@ -200,8 +212,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Adiciona os elementos dos detalhes da tarefa ao modal
         taskDetails.appendChild(taskName);
         taskDetails.appendChild(taskDescription);
-        taskDetails.appendChild(taskDate);
-        taskDetails.appendChild(taskStatus);
+
+        taskFooter.className = 'task-' + sanitizeClassName(task.discipline);
+
+        taskFooter.appendChild(taskStatus);
+        taskFooter.appendChild(taskDate);
+
 
         // Abre o modal
         modal.style.display = 'block';
@@ -241,6 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Adiciona event listener para o botão de limpar filtros
     const clearFiltersButton = document.getElementById('clearFiltersButton');
     clearFiltersButton.addEventListener('click', clearFilters);
+
     const openCreateTaskModalButton = document.getElementById('openCreateTaskModal');
     openCreateTaskModalButton.addEventListener('click', () => {
         const createTaskModal = document.getElementById('createTaskModal');
@@ -268,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const taskDate = document.getElementById('taskDate').value;
 
         const newTask = {
-            id: tasks.length + 1,
+            id: crypto.randomUUID(),
             name: taskName,
             discipline: taskDiscipline,
             description: taskDescription,
@@ -277,13 +294,13 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         tasks.push(newTask);
+        saveTasks(tasks);
         renderTasks();
 
         const createTaskModal = document.getElementById('createTaskModal');
         createTaskModal.style.display = 'none';
         createTaskForm.reset();
     });
-
 
     // Renderiza as tarefas ao carregar a página
     renderTasks();

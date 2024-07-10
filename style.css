@@ -77,6 +77,7 @@ header button {
     background-color: var(--primary-color);
     border: 2px solid var(--secondary-color);
     color: var(--secondary-color);
+    min-width: 2.5rem;
 }
 
 header button:hover {
@@ -161,6 +162,13 @@ main {
 
 /* INSIDE DA TASK */
 
+.task-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .task-disciplina {
     width: fit-content;
     height: fit-content;
@@ -172,6 +180,8 @@ main {
 
 .task-name {
     font-size: 1.5rem;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .task-status {
@@ -220,16 +230,24 @@ header input[type="checkbox"] {
     gap: 1rem;
 }
 
+.modal-header,
 #modalInfo {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    
 }
 
-#taskDetails {
+#taskHeaderButtons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;    
+}
+
+#taskDetails,
+.task-details {
+    overflow-y: scroll;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -239,8 +257,30 @@ header input[type="checkbox"] {
     height: 100% !important;
 }
 
-#taskDetails .task-description {
+#taskDetails .task-description,
+.task-details .task-description {
     height: 100%;
+    overflow-y: scroll;
+}
+
+#taskFooter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.task-date {
+    font-size: 1rem;
+    align-self: center;
+    height: 2rem;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    font-weight: bold;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-end;
 }
 
 /* CHECKBOXES */
@@ -278,8 +318,9 @@ header label {
 }
 
 .task-sociologia .task-disciplina,
-.task-sociologia button {
-    background-color: #ffe282;
+.task-sociologia button,
+.task-sociologia .task-date {
+    background-color: #ffe282 !important;
 }
 
 .task-educacao-fisica,
@@ -288,7 +329,8 @@ header label {
 }
 
 .task-educacao-fisica .task-disciplina,
-.task-educacao-fisica button {
+.task-educacao-fisica button,
+.task-educacao-fisica .task-date {
     background-color: #82aeff;
 }
 
@@ -298,7 +340,8 @@ header label {
 }
 
 .task-projeto-digital .task-disciplina,
-.task-projeto-digital button {
+.task-projeto-digital button,
+.task-projeto-digital .task-date {
     background-color: #d782ff;
 }
 
@@ -308,7 +351,8 @@ header label {
 }
 
 .task-gestao .task-disciplina,
-.task-gestao button {
+.task-gestao button,
+.task-gestao .task-date {
     background-color: #ffbe82;
 }
 
@@ -318,7 +362,8 @@ header label {
 }
 
 .task-portugues .task-disciplina,
-.task-portugues button {
+.task-portugues button,
+.task-portugues .task-date {
     background-color: #ff8282;
 }
 
@@ -328,7 +373,8 @@ header label {
 }
 
 .task-ilustracao .task-disciplina,
-.task-ilustracao button {
+.task-ilustracao button,
+.task-ilustracao .task-date {
     background-color: #9d82ff;
 }
 
@@ -338,7 +384,8 @@ header label {
 }
 
 .task-informatica .task-disciplina,
-.task-informatica button {
+.task-informatica button,
+.task-informatica .task-date {
     background-color: #82f0ff;
 }
 
@@ -348,7 +395,8 @@ header label {
 }
 
 .task-projeto-visual .task-disciplina,
-.task-projeto-visual button {
+.task-projeto-visual button,
+.task-projeto-visual .task-date {
     background-color: #cfff82;
 }
 
@@ -358,7 +406,8 @@ header label {
 }
 
 .task-projeto-editorial .task-disciplina,
-.task-projeto-editorial button {
+.task-projeto-editorial button,
+.task-projeto-editorial .task-date {
     background-color: #82ff8c;
 }
 
@@ -368,7 +417,8 @@ header label {
 }
 
 .task-relacoes-humanas .task-disciplina,
-.task-relacoes-humanas button {
+.task-relacoes-humanas button,
+.task-relacoes-humanas .task-date {
     background-color: #96c4cf;
 }
 
@@ -382,8 +432,9 @@ header label {
 
 #completed-task-list .task-disciplina,
 #completed-task-list button,
-#completed-task-list input[type="checkbox"]:checked {
-    background-color: var(--secondary-color);
+#completed-task-list input[type="checkbox"]:checked,
+#completed-task-list .task-date {
+    background-color: var(--secondary-color) !important;
 }
 
 #completed-task-list .task-name,
@@ -391,9 +442,56 @@ header label {
     text-decoration: line-through;
 }
 
-#taskModal input[type="checkbox"]:checked {
-    background-color: var(--secondary-color);
+/* CREATE TASK MODAL */
+
+#createTaskModal {
     border-color: var(--secondary-color);
+    color: var(--secondary-color);
+    height: fit-content;
+}
+
+#createTaskModal .task-details {
+    color: var(--tertiary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    height: fit-content;
+    overflow-y: auto;
+}
+
+#taskNameLabel,
+#taskDisciplineLabel,
+#taskDescriptionLabel,
+#taskDateLabel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: .5rem;
+    padding-bottom: 1rem;
+    
+}
+
+#taskName,
+#taskDiscipline,
+#taskDescription,
+#taskDate {
+    background-color: var(--primary-color);
+    color: var(--tertiary-color);
+    border: 2px solid var(--secondary-color);
+    border-radius: 1rem;
+    min-height: 2rem;
+    padding: .2rem .8rem;
+    font-size: 1rem !important;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+}
+
+#taskDescription {
+    height: 6rem;
+    width: 100%;
+    padding: .4rem .8rem;
+    resize: none;
+    overflow-y: scroll;
 }
 
 /* BOTÕES */

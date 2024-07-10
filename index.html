@@ -76,12 +76,18 @@
                 <div class="task-disciplina" id="taskDisciplinaId">
                     a
                 </div>
-                <button class="close-task">
-                    <i class="nf nf-fa-close"></i>
-                </button>
+                <div id="taskHeaderButtons">
+                    <div id="taskDeleteButton"></div>
+                    <button class="close-task">
+                        <i class="nf nf-fa-close"></i>
+                    </button>
+                </div>
             </div>
             <div id="taskDetails" class="task-details">
                 <!-- Conteúdo dos detalhes da tarefa será carregado aqui -->
+
+            </div>
+            <div id="taskFooter" class="task-footer">
 
             </div>
         </div>
@@ -92,31 +98,32 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Criar Nova Tarefa</h2>
-                <span class="close-create-task">&times;</span>
+                <button class="close-create-task"><i class="nf nf-fa-close"></i></button>
             </div>
             <form id="createTaskForm" class="task-details">
-                <label for="taskName">
-                    Nome da Tarefa:
-                    <input type="text" id="taskName" name="taskName" required>
+                <label id="taskNameLabel" for="taskName">
+                    Nome
+                    <input type="text" id="taskName" name="taskName" autocomplete="off" required>
                 </label>
     
-                <label for="taskDiscipline">
-                    <select id="taskDiscipline" name="taskDiscipline" required>
+                <label id="taskDisciplineLabel" for="taskDiscipline">
+                    Disciplina
+                    <select id="taskDiscipline" name="taskDiscipline" autocomplete="off" required>
                         <!-- As opções serão preenchidas dinamicamente pelo JavaScript -->
                     </select>
                 </label>
     
-                <label for="taskDescription">
-                    Descrição:
-                    <textarea id="taskDescription" name="taskDescription" required></textarea>
+                <label id="taskDescriptionLabel" for="taskDescription">
+                    Descrição
+                    <textarea id="taskDescription" name="taskDescription" autocomplete="off"></textarea>
                 </label>
     
-                <label for="taskDate">
-                    Data (DD/MM/YYYY):
-                    <input type="date" id="taskDate" name="taskDate" required>
+                <label id="taskDateLabel" for="taskDate">
+                    Data
+                    <input type="date" id="taskDate" name="taskDate" autocomplete="off" required>
                 </label>
     
-                <button type="submit">Adicionar Tarefa</button>
+                <button id="taskCreateButton" type="submit"><i class="nf nf-fa-plus"></i></button>
             </form>
         </div>
     </div>
