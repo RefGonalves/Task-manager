@@ -94,7 +94,6 @@ header button:hover {
     justify-content: flex-start !important;
 }
 
-/* */
 #fileHeaderButtons {
     display: flex;
     flex-direction: row;
