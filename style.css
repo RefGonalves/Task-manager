@@ -107,7 +107,8 @@ header button:hover {
     align-items: center;
     justify-content: right;
     color: var(--secondary-color);
-    font-size: 2rem;
+    opacity: 50%;
+    font-size: 1.5rem;
 }
 
 /* TASK LISTS */
@@ -555,6 +556,42 @@ button:hover {
 }
 
 /* MEDIA QUERIES */
+@media (max-width: 600px) {
+    main {
+        flex-wrap: wrap; /* Quebra de linha quando a tela for pequena */
+    }
+
+    #ongoingTaskContainer,
+    #completedTaskContainer {
+        width: 100% !important; /* Ocupa 100% da largura da tela */
+    }
+    .filters {
+        gap: .5rem;
+    }
+}
+
+/* HEADER FIX */
+
+#fileHeaderButtons {
+    position: absolute;
+    right: 1rem;
+}
+
+#openCreateTaskModal {
+    z-index: 1000;
+    position: fixed;
+    left: 8rem;
+}
+#clearFiltersButton {
+    z-index: 1000;
+    position: fixed;
+    left: 4.5rem;
+}
+
+#taskHeaderButtons .filters {
+    padding-top: 2rem;
+}
+
 @media (max-width: 972px) {
     main {
         flex-wrap: wrap; /* Quebra de linha quando a tela for pequena */
@@ -562,9 +599,18 @@ button:hover {
 
     #ongoingTaskContainer,
     #completedTaskContainer {
-        width: 100%; /* Ocupa 100% da largura da tela */
+        width: 100% !important; /* Ocupa 100% da largura da tela */
+        min-width: 100%;
+        max-width: 100%;
     }
     .filters {
         gap: .5rem;
+    }
+
+    .modal {
+        align-self: center;
+        left: 1rem;
+        right: 1rem;
+        height: 75vh;
     }
 }

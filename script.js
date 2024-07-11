@@ -98,9 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Função para converter data
     function formatDate(dateString) {
         const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
+        console.log(`DATA INICIAL:` + date);
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const year = date.getUTCFullYear();
+        console.log(`DATA FORMATADA: ${day}/${month}/${year}`);
         return `${day}/${month}/${year}`;
     }
 
@@ -157,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const taskDate = document.createElement('div');
             taskDate.className = 'task-date';
-            taskDate.textContent = formatDate(task.date);
+            taskDate.textContent = task.date;
 
             const taskStatus = document.createElement('div');
             taskStatus.className = 'task-status';
@@ -246,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const taskDate = document.createElement('div');
         taskDate.className = 'task-date';
-        taskDate.textContent = formatDate(task.date);
+        taskDate.textContent = task.date;
 
         const taskStatus = document.createElement('div');
         taskStatus.className = 'task-status';
@@ -336,8 +338,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const taskName = document.getElementById('taskName').value;
         const taskDiscipline = document.getElementById('taskDiscipline').value;
         const taskDescription = document.getElementById('taskDescription').value;
-        const taskDate = document.getElementById('taskDate').value;
-
+        const taskDate = formatDate(document.getElementById('taskDate').value);
+        console.log(document.getElementById('taskDate').value);
         const newTask = {
             id: crypto.randomUUID(),
             name: taskName,
